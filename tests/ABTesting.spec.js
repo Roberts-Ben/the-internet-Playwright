@@ -6,7 +6,7 @@ test.describe('AB Testing', () => {
   const HEADER_A = 'A/B Test Variation 1';
   const HEADER_B = 'A/B Test Control';
 
-  test('verify header text', async ({ page }) => {
+  test('verifyHeaderText', async ({ page }) => {
     const abPage = new ABTestingPage(page);
 
     await abPage.goto();
