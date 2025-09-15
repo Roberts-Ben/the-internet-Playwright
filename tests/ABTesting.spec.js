@@ -1,19 +1,17 @@
 // @ts-check
 import { test, expect } from '@playwright/test';
+import { ABTestingPage } from '../pages/ABTesting.page';
 
-test.beforeEach(async ({ page }) => 
-{
-  await page.goto('https://the-internet.herokuapp.com/abtest');
-  await expect(page).toHaveURL('https://the-internet.herokuapp.com/abtest')
-});
+test.describe('AB Testing', () => {
+  const HEADER_A = 'A/B Test Variation 1';
+  const HEADER_B = 'A/B Test Control';
 
-test('verifyAPage', async ({ page }) => {
-  const AHeader = "A/B Test Variation 1";
-  const BHeader = "A/B Test Control";
+  test('verify header text', async ({ page }) => {
+    const abPage = new ABTestingPage(page);
 
-  const header = page.locator('h3');
-  const headerText = await header.textContent();
+    await abPage.goto();
+    const headerText = await abPage.getHeaderText();
 
-  // Assert headerText is either AHeader or BHeader
-  expect([AHeader, BHeader]).toContain(headerText);
+    expect([HEADER_A, HEADER_B]).toContain(headerText);
+  });
 });

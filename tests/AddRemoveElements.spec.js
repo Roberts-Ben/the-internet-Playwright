@@ -1,91 +1,85 @@
 // @ts-check
 import { test, expect } from '@playwright/test';
+import { AddRemoveElementsPage } from '../pages/AddRemoveElements.page';
 
-const addButton = "button[onclick='addElement()']";
-const deleteButton = "button[onclick='deleteElement()']";
+test.describe('Add Remove Elements', () => {
+  test.beforeEach(async ({ page }) => {
+    const addRemovePage = new AddRemoveElementsPage(page);
+    await addRemovePage.goto();
+  });
 
-test.beforeEach(async ({ page }) => 
-{
-  await page.goto('https://the-internet.herokuapp.com/add_remove_elements/');
-  await expect(page).toHaveURL('https://the-internet.herokuapp.com/add_remove_elements/')
-});
+  test('verifyAddElement', async ({ page }) => {
+    const addRemovePage = new AddRemoveElementsPage(page);
+
+    await addRemovePage.addElement();
+
+    await expect(addRemovePage.getDeleteButtons()).toHaveCount(1);
+  });
+
+  test('verifyAddMultipleElement', async ({ page }) => {
+    const addRemovePage = new AddRemoveElementsPage(page);
+    const elementsToAdd = 10;
     
-test('verifyAddElement', async ({ page }) => 
-{
-    await AddElement(page);
-
-    await expect(page.locator(deleteButton)).toBeVisible();
-});
-
-test('verifyAddMultipleElement', async ({ page }) => 
-{
-    const elementsToAdd = 10;
-
     for(let i = 0; i < elementsToAdd; i++)
     {
-        await AddElement(page);
+      await addRemovePage.addElement();
     }
 
-    await expect(page.locator(deleteButton)).toHaveCount(elementsToAdd);
-});
+    await expect(addRemovePage.getDeleteButtons()).toHaveCount(elementsToAdd);
+  });
 
-test('verifyDeleteElement', async ({ page }) => 
-{
-    await AddElement(page);
+  test('verifyDeleteElement', async ({ page }) => {
+    const addRemovePage = new AddRemoveElementsPage(page);
 
-    await expect(page.locator(deleteButton)).toHaveCount(1);
+    await addRemovePage.addElement();
 
-    await page.locator(deleteButton).first().click();
+    await expect(addRemovePage.getDeleteButtons()).toHaveCount(1);
 
-    await expect(page.locator(deleteButton)).toHaveCount(0);
-});
+    await addRemovePage.deleteElement(0);
 
-test('verifyDeleteAllElements', async ({ page }) => 
-{
+    await expect(addRemovePage.getDeleteButtons()).toHaveCount(0);
+  });
+
+  test('verifyDeleteAllElements', async ({ page }) => {
+    const addRemovePage = new AddRemoveElementsPage(page);
     const elementsToAdd = 10;
-
+    
     for(let i = 0; i < elementsToAdd; i++)
     {
-        await AddElement(page);
+      await addRemovePage.addElement();
     }
 
-    await expect(page.locator(deleteButton)).toHaveCount(elementsToAdd);
+    await expect(addRemovePage.getDeleteButtons()).toHaveCount(elementsToAdd);
 
-    const deleteButtons = page.locator(deleteButton);
-    const count = await deleteButtons.count();
+    const deleteButtons = addRemovePage.getDeleteButtons();
+    let count = await deleteButtons.count();
 
     for (let i = 0; i < count; i++) 
     {
       await deleteButtons.first().click();
     }
 
-    await expect(page.locator(deleteButton)).toHaveCount(0);
-});
+    await expect(addRemovePage.getDeleteButtons()).toHaveCount(0);
+  });
 
-test('verifyDeleteRandomElements', async ({ page }) => 
-{
+  test('verifyDeleteRandomElements', async ({ page }) => {
+    const addRemovePage = new AddRemoveElementsPage(page);
     const elementsToAdd = 10;
     const elementsToDelete = 3;
 
     for(let i = 0; i < elementsToAdd; i++)
     {
-        await AddElement(page);
+      await addRemovePage.addElement();
     }
 
-    for (let i = 0; i < elementsToDelete; i++) 
+    for (let i = 0; i < elementsToDelete; i++)
     {
-      const deleteButtons = page.locator(deleteButton);
+      const deleteButtons = addRemovePage.getDeleteButtons();
       const count = await deleteButtons.count();
-
       const randomIndex = Math.floor(Math.random() * count);
-
       await deleteButtons.nth(randomIndex).click();
     }
 
-    await expect(page.locator(deleteButton)).toHaveCount(elementsToAdd - elementsToDelete);
+    await expect(addRemovePage.getDeleteButtons()).toHaveCount(elementsToAdd - elementsToDelete);
+  });
 });
-
-async function AddElement(page) 
-{
-  await page.click(addButton);
-}
