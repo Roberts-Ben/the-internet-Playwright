@@ -1,4 +1,3 @@
-// @ts-check
 import { expect } from '@playwright/test';
 
 export class AddRemoveElementsPage 
@@ -27,9 +26,6 @@ export class AddRemoveElementsPage
         await this.deleteButton.nth(index).click();
     }
 
-    /**
-     *@returns {import('@playwright/test').Locator}
-    */
     getDeleteButtons() 
     {
         return this.deleteButton;

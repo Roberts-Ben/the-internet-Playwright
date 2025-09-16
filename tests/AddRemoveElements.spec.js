@@ -1,4 +1,3 @@
-// @ts-check
 import { test, expect } from '@playwright/test';
 import { AddRemoveElementsPage } from '../pages/AddRemoveElements.page';
 
@@ -51,7 +50,7 @@ test.describe('Add Remove Elements', () => {
 
     await expect(addRemovePage.getDeleteButtons()).toHaveCount(elementsToAdd);
 
-    const deleteButtons = addRemovePage.getDeleteButtons();
+    const deleteButtons = await addRemovePage.getDeleteButtons();
     let count = await deleteButtons.count();
 
     for (let i = 0; i < count; i++) 
@@ -74,7 +73,7 @@ test.describe('Add Remove Elements', () => {
 
     for (let i = 0; i < elementsToDelete; i++)
     {
-      const deleteButtons = addRemovePage.getDeleteButtons();
+      const deleteButtons = await addRemovePage.getDeleteButtons();
       const count = await deleteButtons.count();
       const randomIndex = Math.floor(Math.random() * count);
       await deleteButtons.nth(randomIndex).click();

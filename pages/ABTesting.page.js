@@ -1,4 +1,3 @@
-// @ts-check
 import { expect } from '@playwright/test';
 
 export class ABTestingPage 

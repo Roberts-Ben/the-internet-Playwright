@@ -1,4 +1,3 @@
-// @ts-check
 import { test, expect, chromium } from '@playwright/test';
 import { AuthPage } from '../pages/Auth.page';
 
@@ -46,8 +45,8 @@ test.describe('Basic Auth', () => {
     test('verifyNoAuth', async ({ page }) => {
         const authPage = new AuthPage(page);
 
-        const response = await page.goto(authPage.url, { waitUntil: 'domcontentloaded' });
-        if (!response) throw new Error('Navigation failed, response is null');
+        const response = await page.request.get(authPage.url);
+        
         expect(response.status()).toBe(401);
     }); 
 
@@ -59,9 +58,7 @@ test.describe('Basic Auth', () => {
         const page = await context.newPage();
         const authPage = new AuthPage(page);
         
-        await authPage.navigateWithAuth();
-
-        const response = await page.goto(authPage.URL, { waitUntil: 'domcontentloaded' });
+        const response = await page.goto(authPage.url, { waitUntil: 'domcontentloaded' });
         if (!response) throw new Error('Navigation failed, response is null');
         expect(response.status()).toBe(401);
 

@@ -1,4 +1,3 @@
-// @ts-check
 import { expect } from '@playwright/test';
 
 export class AuthPage 
@@ -25,7 +24,7 @@ export class AuthPage
     await expect(this.page).toHaveURL(this.url);
   }
 
-  async navigateWithNoAuth()
+  async navigateWithoutAuth()
   {
     await this.page.goto(this.url);
   }
