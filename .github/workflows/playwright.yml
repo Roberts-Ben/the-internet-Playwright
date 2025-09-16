@@ -38,28 +38,35 @@ jobs:
 
       # Install additional WebKit dependencies
       - name: Install WebKit system dependencies
-        run: sudo apt-get update && sudo apt-get install -y \
-          libgtk-3-0 \
-          libx11-xcb1 \
-          libxcomposite1 \
-          libxdamage1 \
-          libxrandr2 \
-          libpangocairo-1.0-0 \
-          libcups2 \
-          libatk1.0-0 \
-          libatk-bridge2.0-0 \
-          libepoxy0 \
-          libasound2 \
-          libnss3 \
-          libwoff1 \
-          libwoff2-2 \
-          libopus0 \
-          libgdk-pixbuf2.0-0 \
-          libharfbuzz0b \
-          libgles2-mesa \
-          libdrm2 \
-          libgbm1 \
-          libxshmfence1
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y \
+            libc6 \
+            libgcc-s1 \
+            libgdk-pixbuf-2.0-0 \
+            libnspr4 \
+            libnss3 \
+            libatk1.0-0 \
+            libatk-bridge2.0-0 \
+            libcups2 \
+            libdrm2 \
+            libxcomposite1 \
+            libxdamage1 \
+            libxrandr2 \
+            libx11-xcb1 \
+            libxss1 \
+            libasound2 \
+            libwoff1 \
+            libwoff2-2 \
+            libopus0 \
+            libegl-mesa0 \
+            libgles2-mesa \
+            libpangocairo-1.0-0 \
+            libharfbuzz0b \
+            libepoxy0 \
+            libgbm1 \
+            libxshmfence1 \
+            libgtk-3-0
 
   test:
     needs: setup
