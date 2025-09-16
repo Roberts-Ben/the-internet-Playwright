@@ -8,7 +8,7 @@ on:
 
 jobs:
   setup:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-20.04
     outputs:
       cache-key: ${{ steps.cache.outputs.cache-hit }}
     steps:
@@ -38,10 +38,10 @@ jobs:
 
   test:
     needs: setup
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-20.04
     strategy:
       matrix:
-        browser: [chromium, firefox]
+        browser: [chromium, firefox, webkit]
     steps:
       - uses: actions/checkout@v4
 
