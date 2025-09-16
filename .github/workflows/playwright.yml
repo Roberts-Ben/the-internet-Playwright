@@ -9,19 +9,39 @@ on:
 jobs:
   setup:
     runs-on: ubuntu-latest
+    outputs:
+      cache-key: ${{ steps.cache.outputs.cache-hit }}
     steps:
       - uses: actions/checkout@v4
+
       - uses: actions/setup-node@v4
         with:
           node-version: lts/*
-      - run: npm ci
-      - run: npx playwright install --with-deps
-      - uses: actions/cache@v4
+
+      # Cache Node modules and Playwright browsers
+      - name: Cache Node modules and Playwright
+        id: cache
+        uses: actions/cache@v4
         with:
           path: |
             node_modules
             ~/.cache/ms-playwright
           key: setup-${{ hashFiles('**/package-lock.json') }}
+      
+      # Install dependencies
+      - name: Install Node dependencies
+        run: npm ci
+
+      # Install Playwright browsers with system deps
+      - name: Install Playwright Browsers
+        run: npx playwright install --with-deps
+
+      # Install additional WebKit dependencies
+      - name: Install WebKit system dependencies
+        run: sudo apt-get update && sudo apt-get install -y \
+          libwoff2-1 libwoff1-1 libopus0 libgdk-pixbuf2.0-0 libatk-bridge2.0-0 libatk1.0-0 libcups2 \
+          libxcomposite1 libxdamage1 libxrandr2 libasound2 libpangocairo-1.0-0 libgtk-3-0 \
+          libwoff2dec1
 
   test:
     needs: setup
@@ -31,20 +51,28 @@ jobs:
         browser: [chromium, firefox, webkit]
     steps:
       - uses: actions/checkout@v4
+
       - uses: actions/setup-node@v4
         with:
           node-version: lts/*
-      - name: Restore cache
+
+      # Restore cache
+      - name: Restore Node modules and Playwright cache
         uses: actions/cache@v4
         with:
           path: |
             node_modules
             ~/.cache/ms-playwright
           key: setup-${{ hashFiles('**/package-lock.json') }}
+
+      # Run tests
       - name: Run Playwright tests
         run: npx playwright test --workers=4 --reporter=list,html --project=${{ matrix.browser }}
-      - uses: actions/upload-artifact@v4
-        if: ${{ !cancelled() }}
+
+      # Upload HTML report
+      - name: Upload Playwright Report
+        if: always()
+        uses: actions/upload-artifact@v4
         with:
           name: playwright-report
           path: playwright-report/
