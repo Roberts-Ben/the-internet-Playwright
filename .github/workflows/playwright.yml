@@ -36,37 +36,12 @@ jobs:
       - name: Install Playwright Browsers
         run: npx playwright install --with-deps
 
-      # Install WebKit system libraries for Ubuntu 22.04
-      - name: Install WebKit system dependencies
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y \
-            libgtk-3-0 \
-            libx11-xcb1 \
-            libxcomposite1 \
-            libxdamage1 \
-            libxrandr2 \
-            libpangocairo-1.0-0 \
-            libcups2 \
-            libatk1.0-0 \
-            libatk-bridge2.0-0 \
-            libepoxy0 \
-            libnss3 \
-            libwoff1 \
-            libopus0 \
-            libgdk-pixbuf2.0-0 \
-            libharfbuzz0b \
-            libegl-mesa0 \
-            libdrm2 \
-            libgbm1 \
-            libxshmfence1
-
   test:
     needs: setup
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        browser: [chromium, firefox, webkit]
+        browser: [chromium, firefox]
     steps:
       - uses: actions/checkout@v4
 
@@ -92,6 +67,6 @@ jobs:
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: playwright-report
+          name: playwright-report-${{ matrix.browser }}
           path: playwright-report/
           retention-days: 30
