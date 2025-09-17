@@ -1,22 +1,32 @@
 import { test, expect } from '@playwright/test';
+import { testA11y } from '../fixtures/a11yFixture.js';
 import { AddRemoveElementsPage } from '../pages/AddRemoveElements.page';
 
 test.describe('Add Remove Elements', () => {
+  let addRemovePage;
+
   test.beforeEach(async ({ page }) => {
-    const addRemovePage = new AddRemoveElementsPage(page);
+    addRemovePage = new AddRemoveElementsPage(page);
     await addRemovePage.goto();
   });
 
-  test('verifyAddElement', async ({ page }) => {
-    const addRemovePage = new AddRemoveElementsPage(page);
+  testA11y('accessibility', async ({ accessibilityBuilder }, testInfo) => { 
+    const results = await accessibilityBuilder.analyze();
+    await testInfo.attach("accessibility-scan-results", {
+      body: JSON.stringify(results, null, 2),
+      contentType: "application/json"
+    });
+      
+    //expect(results.violations).toEqual([]); 
+  });
 
+  test('verifyAddElement', async () => {
     await addRemovePage.addElement();
 
     await expect(addRemovePage.getDeleteButtons()).toHaveCount(1);
   });
 
-  test('verifyAddMultipleElement', async ({ page }) => {
-    const addRemovePage = new AddRemoveElementsPage(page);
+  test('verifyAddMultipleElement', async () => {
     const elementsToAdd = 10;
     
     for(let i = 0; i < elementsToAdd; i++)
@@ -27,9 +37,7 @@ test.describe('Add Remove Elements', () => {
     await expect(addRemovePage.getDeleteButtons()).toHaveCount(elementsToAdd);
   });
 
-  test('verifyDeleteElement', async ({ page }) => {
-    const addRemovePage = new AddRemoveElementsPage(page);
-
+  test('verifyDeleteElement', async () => {
     await addRemovePage.addElement();
 
     await expect(addRemovePage.getDeleteButtons()).toHaveCount(1);
@@ -39,8 +47,7 @@ test.describe('Add Remove Elements', () => {
     await expect(addRemovePage.getDeleteButtons()).toHaveCount(0);
   });
 
-  test('verifyDeleteAllElements', async ({ page }) => {
-    const addRemovePage = new AddRemoveElementsPage(page);
+  test('verifyDeleteAllElements', async () => {
     const elementsToAdd = 10;
     
     for(let i = 0; i < elementsToAdd; i++)
@@ -61,8 +68,7 @@ test.describe('Add Remove Elements', () => {
     await expect(addRemovePage.getDeleteButtons()).toHaveCount(0);
   });
 
-  test('verifyDeleteRandomElements', async ({ page }) => {
-    const addRemovePage = new AddRemoveElementsPage(page);
+  test('verifyDeleteRandomElements', async () => {
     const elementsToAdd = 10;
     const elementsToDelete = 3;
 
