@@ -13,7 +13,7 @@ test.describe('Checkboxes', () => {
   testA11y('accessibility', async ({ accessibilityBuilder }, testInfo) => { 
     const results = await accessibilityBuilder.analyze();
     await testInfo.attach("accessibility-scan-results", {
-        body: JSON.stringify(results, null, 2),
+        body: JSON.stringify(results.violations, null, 2),
         contentType: "application/json"
     });
     

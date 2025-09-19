@@ -6,16 +6,16 @@ export class ChallengingDOMPage
     {
         this.page = page;
         this.url = 'https://the-internet.herokuapp.com/challenging_dom';
-        this.button = this.page.locator("//a[@class='button']");
-        this.alertButton = this.page.locator("//a[@class='button alert']");
-        this.successButton = this.page.locator("//a[@class='button success']");
+        this.button = this.page.locator('a.button').first();
+        this.alertButton = this.page.locator('a.button.alert');
+        this.successButton = this.page.locator('a.button.success');
 
-        this.tableHeader = this.page.locator("//th[contains(text(),'Lorem')]");
-        this.tableContent = this.page.locator("//td[contains(text(),'Iuvaret')]");
-        this.tableEditButton = this.page.locator("//a[text()='edit']");
-        this.tableDeleteButton = this.page.locator("//a[text()='delete']");
+        this.tableHeader = this.page.locator("table th:has-text('Lorem')");
+        this.tableContent = this.page.locator("table td:has-text('Iuvaret')");
+        this.tableEditButton = this.page.locator("table a:has-text('edit')");
+        this.tableDeleteButton = this.page.locator("table a:has-text('delete')");
 
-        this.canvas = this.page.locator("canvas");
+        this.canvas = this.page.locator('canvas');
     }
 
     async goto() 
