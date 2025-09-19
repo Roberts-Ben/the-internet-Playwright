@@ -6,7 +6,7 @@ export class CheckboxesPage
     {
         this.page = page;
         this.url = 'https://the-internet.herokuapp.com/checkboxes';
-        this.checkboxes = this.page.locator("input");
+        this.checkboxes = this.page.getByRole('checkbox');
     }
 
     async goto() 

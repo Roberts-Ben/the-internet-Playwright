@@ -5,7 +5,7 @@ export class AuthPage
   constructor(page) {
     this.page = page;
     this.url = 'https://the-internet.herokuapp.com/basic_auth';
-    this.content = this.page.locator('p');
+    this.content = this.page.getByRole('paragraph');
     this.username = 'admin';
     this.password = 'admin';
   }

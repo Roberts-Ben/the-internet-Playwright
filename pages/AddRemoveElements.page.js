@@ -6,8 +6,8 @@ export class AddRemoveElementsPage
     {
         this.page = page;
         this.url = 'https://the-internet.herokuapp.com/add_remove_elements/';
-        this.addButton = this.page.locator("button[onclick='addElement()']");
-        this.deleteButton = this.page.locator("button[onclick='deleteElement()']");
+        this.addButton = this.page.getByRole('button', { name: 'Add Element' });
+        this.deleteButton = this.page.getByRole('button', { name: 'Delete' });
     }
 
     async goto() 
