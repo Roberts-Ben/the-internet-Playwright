@@ -15,11 +15,6 @@ export class BrokenImagesPage
         await expect(this.page).toHaveURL(this.url);
     }
 
-    getAllImages() 
-    {
-        return this.images;
-    }
-
     async getImageURL(imgLocator) 
     {
         const src = await imgLocator.getAttribute('src');

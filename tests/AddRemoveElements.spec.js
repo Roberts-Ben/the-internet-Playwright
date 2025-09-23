@@ -57,12 +57,9 @@ test.describe('Add Remove Elements', () => {
 
     await expect(addRemovePage.getDeleteButtons()).toHaveCount(elementsToAdd);
 
-    const deleteButtons = await addRemovePage.getDeleteButtons();
-    let count = await deleteButtons.count();
-
-    for (let i = 0; i < count; i++) 
+    while ((await addRemovePage.getDeleteButtons().count()) > 0) 
     {
-      await deleteButtons.first().click();
+      await addRemovePage.getDeleteButtons().first().click();
     }
 
     await expect(addRemovePage.getDeleteButtons()).toHaveCount(0);

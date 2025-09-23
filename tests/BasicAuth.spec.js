@@ -22,7 +22,7 @@ test.describe('Basic Auth', () => {
         await authPage.navigateWithCredentials();
         
         const message = await authPage.getSuccessMessage();
-        expect(message).toContain('Congratulations! You must have the proper credentials.');
+        expect(message).toContain(authPage.successMessageText);
     });
 
     test('verifyHttpCredentials', async ({ browser }) => {
@@ -34,7 +34,7 @@ test.describe('Basic Auth', () => {
 
         await authPage.navigateWithAuth();
         const message = await authPage.getSuccessMessage();
-        expect(message).toContain('Congratulations! You must have the proper credentials.');
+        expect(message).toContain(authPage.successMessageText);
 
         await context.close();
     });
@@ -52,7 +52,7 @@ test.describe('Basic Auth', () => {
         await authPage.navigateWithAuth();
 
         const message = await authPage.getSuccessMessage();
-        expect(message).toContain('Congratulations! You must have the proper credentials.');
+        expect(message).toContain(authPage.successMessageText);
 
         await context.close();
     });

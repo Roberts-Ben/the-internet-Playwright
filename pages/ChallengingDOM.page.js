@@ -24,29 +24,9 @@ export class ChallengingDOMPage
         await expect(this.page).toHaveURL(this.url);
     }
 
-    getButton()
-    {
-        return this.button;
-    }
-
-    getAlertButton()
-    {
-        return this.alertButton;
-    }
-
-    getSuccessButton()
-    {
-        return this.successButton;
-    }
-
-    getHeader()
-    {
-        return this.tableHeader;
-    }
-
     async getCellText(index)
     {
-        return (await this.tableContent.nth(index).textContent())?.trim();
+        return await this.tableContent.nth(index).innerText();
     }
 
     async clickEdit()

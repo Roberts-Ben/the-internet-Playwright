@@ -14,9 +14,4 @@ export class ABTestingPage
         await this.page.goto(this.url);
         await expect(this.page).toHaveURL(this.url);
     }
-
-    async getHeaderText() 
-    {
-        return (await this.header.textContent())?.trim();
-    }
 }

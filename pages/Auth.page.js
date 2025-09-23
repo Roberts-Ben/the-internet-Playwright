@@ -6,6 +6,7 @@ export class AuthPage
     this.page = page;
     this.url = 'https://the-internet.herokuapp.com/basic_auth';
     this.content = this.page.getByRole('paragraph');
+    this.successMessageText = "Congratulations! You must have the proper credentials.";
     this.username = 'admin';
     this.password = 'admin';
   }

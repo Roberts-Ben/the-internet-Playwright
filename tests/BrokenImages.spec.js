@@ -21,7 +21,7 @@ test.describe('Broken Images', () => {
     });
     
     test('verifyImages', async ({ page }) => {       
-        const images = await brokenImagesPage.getAllImages();
+        const images = await brokenImagesPage.images;
 
         let count = await images.count();
 

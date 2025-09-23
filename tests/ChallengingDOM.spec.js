@@ -21,21 +21,21 @@ test.describe('Challenging DOM', () => {
   });
 
   test('verifyButton', async () => {
-    await expect(challengingDOMPage.getButton()).toBeVisible();
+    await expect(challengingDOMPage.button).toBeVisible();
   });
 
   test('verifyAlertButton', async () => {
-    await expect (challengingDOMPage.getAlertButton()).toBeVisible();
+    await expect (challengingDOMPage.alertButton).toBeVisible();
   });
 
   test('verifySuccessButton', async () => {
-    await expect(challengingDOMPage.getSuccessButton()).toBeVisible();
+    await expect(challengingDOMPage.successButton).toBeVisible();
   });
 
   test('verifyTable', async () => {
     const tableSize = 10;
 
-    await expect(challengingDOMPage.getHeader()).toBeVisible();
+    await expect(challengingDOMPage.tableHeader).toBeVisible()
     
     await challengingDOMPage.clickEdit();
     await expect(challengingDOMPage.page).toHaveURL(challengingDOMPage.url + "#edit");

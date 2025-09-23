@@ -10,7 +10,7 @@ test.describe('Drag and Drop', () => {
     await dragAndDropPage.goto();
   });
 
-  testA11y('accessibility', async ({ page, accessibilityBuilder }, testInfo) => { 
+  testA11y('accessibility', async ({ accessibilityBuilder }, testInfo) => { 
     const results = await accessibilityBuilder.analyze();
     await testInfo.attach("accessibility-scan-results", {
       body: JSON.stringify(results.violations, null, 2),
@@ -20,13 +20,13 @@ test.describe('Drag and Drop', () => {
     //expect(results.violations).toEqual([]); 
   });
 
-  test('verifyDragDropSwap', async ({ page }) => {
-      expect(await dragAndDropPage.getHeaderAText()).toBe('A');
-      expect(await dragAndDropPage.getHeaderBText()).toBe('B');
+  test('verifyDragDropSwap', async () => {
+      await expect(dragAndDropPage.headerA).toHaveText('A');
+      await expect(dragAndDropPage.headerB).toHaveText('B');
 
       await dragAndDropPage.dragAndDrop();
 
-      expect(await dragAndDropPage.getHeaderAText()).toBe('B');
-      expect(await dragAndDropPage.getHeaderBText()).toBe('A');
+      await expect(dragAndDropPage.headerA).toHaveText('B');
+      await expect(dragAndDropPage.headerB).toHaveText('A');
   });
 });

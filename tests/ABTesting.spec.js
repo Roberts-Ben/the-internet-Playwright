@@ -24,7 +24,7 @@ test.describe('AB Testing', () => {
   });
 
   test('verifyHeaderText', async () => {
-    const headerText = await abPage.getHeaderText();
+    const headerText = await abPage.header.innerText();
     expect([HEADER_A, HEADER_B]).toContain(headerText);
   });
 });

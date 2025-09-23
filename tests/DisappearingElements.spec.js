@@ -1,16 +1,16 @@
 import { test, expect } from '@playwright/test';
 import { testA11y } from '../fixtures/a11yFixture.js';
-import { DisappeaingElementsPage } from '../pages/DisappearingElements.page';
+import { DisappearingElementsPage } from '../pages/DisappearingElements.page';
 
 test.describe('Disappearing Elements', () => {
-  let disappeaingElementsPage;
+  let disappearingElementsPage;
 
   test.beforeEach(async ({ page }) => {
-    disappeaingElementsPage = new DisappeaingElementsPage(page);
-    await disappeaingElementsPage.goto();
+    disappearingElementsPage = new DisappearingElementsPage(page);
+    await disappearingElementsPage.goto();
   });
 
-  testA11y('accessibility', async ({ page, accessibilityBuilder }, testInfo) => { 
+  testA11y('accessibility', async ({ accessibilityBuilder }, testInfo) => { 
     const results = await accessibilityBuilder.analyze();
     await testInfo.attach("accessibility-scan-results", {
       body: JSON.stringify(results.violations, null, 2),
@@ -20,14 +20,14 @@ test.describe('Disappearing Elements', () => {
     //expect(results.violations).toEqual([]); 
   });
 
-  test('verifyDisappearingElements', async ({ page }) => {
+  test('verifyDisappearingElements', async () => {
 
     let verified5Elements = false;
     let verified4Elements = false;
 
     while(!verified4Elements || !verified5Elements)
     {
-        const listSize = await disappeaingElementsPage.getMenuSize();
+        const listSize = await disappearingElementsPage.buttons.count();
 
         if(listSize == 5 && !verified5Elements)
         {
@@ -40,7 +40,7 @@ test.describe('Disappearing Elements', () => {
             verified4Elements = true;
         }
 
-        await disappeaingElementsPage.goto();
+        await disappearingElementsPage.goto();
     }   
   });
 });

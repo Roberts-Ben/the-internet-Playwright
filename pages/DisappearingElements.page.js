@@ -1,6 +1,6 @@
 import { expect } from '@playwright/test';
 
-export class DisappeaingElementsPage 
+export class DisappearingElementsPage 
 {
     constructor(page) 
     {
@@ -13,10 +13,5 @@ export class DisappeaingElementsPage
     {
         await this.page.goto(this.url);
         await expect(this.page).toHaveURL(this.url);
-    }
-
-    async getMenuSize()
-    {
-        return this.buttons.count();
     }
 }

@@ -1,13 +1,13 @@
 import { test, expect } from '@playwright/test';
 import { testA11y } from '../fixtures/a11yFixture.js';
-import { TemplatePage } from '../pages/Template.page';
+import { DropdownPage } from '../pages/Dropdown.page';
 
-test.describe('Test', () => {
-  let templatePage;
+test.describe('Dropdown', () => {
+  let dropdownPage;
 
   test.beforeEach(async ({ page }) => {
-    templatePage = new TemplatePage(page);
-    await templatePage.goto();
+    dropdownPage = new DropdownPage(page);
+    await dropdownPage.goto();
   });
 
   testA11y('accessibility', async ({ accessibilityBuilder }, testInfo) => { 
@@ -20,7 +20,11 @@ test.describe('Test', () => {
     //expect(results.violations).toEqual([]); 
   });
 
-  test('aTest', async ({ page }) => {
-      
+  test('verifyDropdown', async () => {
+      await expect(dropdownPage.dropdown).toHaveValue('');
+
+      await dropdownPage.selectByValue('1');
+
+      await expect(dropdownPage.dropdown).toHaveValue('1');
   });
 });
