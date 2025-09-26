@@ -20,12 +20,20 @@ test.describe('Drag and Drop', () => {
     //expect(results.violations).toEqual([]); 
   });
 
-  test('verifyDragDropSwap', async () => {
+  test('verifyDragDropSwap', async ( { browserName }) => {
       await expect(dragAndDropPage.headerA).toHaveText('A');
       await expect(dragAndDropPage.headerB).toHaveText('B');
 
-      await dragAndDropPage.dragAndDrop();
-
+      if(browserName === 'webkit')
+      {
+        console.log("Running dragDropHelper.js for Webkit");
+        await dragAndDropPage.dragAndDropScript();
+      }
+      else
+      {
+        await dragAndDropPage.dragAndDrop();
+      }
+      
       await expect(dragAndDropPage.headerA).toHaveText('B');
       await expect(dragAndDropPage.headerB).toHaveText('A');
   });

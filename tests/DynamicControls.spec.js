@@ -6,6 +6,7 @@ test.describe('Dynamic Controls', () => {
   let dynamicControlsPage;
 
   test.beforeEach(async ({ page }) => {
+    test.setTimeout(30_000);
     dynamicControlsPage = new DynamicControlsPage(page);
     await dynamicControlsPage.goto();
   });
