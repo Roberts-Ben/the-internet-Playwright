@@ -61,8 +61,10 @@ jobs:
 
       # Run Playwright tests
       - name: Run Playwright tests
-        run: npx playwright test --workers=4 --reporter=list,html --project=${{ matrix.browser }}
-
+        run: |
+          set -o pipefail
+          npx playwright test --workers=4 --reporter=list,html --project=${{ matrix.browser }}
+          
       # Upload HTML report
       - name: Upload Playwright Report
         if: always()
