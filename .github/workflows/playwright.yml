@@ -18,6 +18,11 @@ jobs:
         with:
           node-version: lts/*
 
+      - name: Install system dependencies (for WebKit)
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y libwoff1 libwoff-dev libwoff2dec0 libwoff2
+
       # Cache Node modules and Playwright browsers
       - name: Cache Node modules and Playwright
         id: cache
