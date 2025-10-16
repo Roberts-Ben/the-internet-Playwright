@@ -16,7 +16,7 @@ export class HorizontalSliderPage
         await expect(this.page).toHaveURL(this.url);
     }
 
-    async dragSlider(value)
+    async dragSlider()
     {
         const boundingBox = await this.slider.boundingBox();
         const startX = boundingBox.x;

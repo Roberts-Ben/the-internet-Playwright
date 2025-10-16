@@ -17,7 +17,7 @@ export class FileDownloadPage
 
     async getDownloadButtons()
     {
-        return await this.downloadButtons.all();
+        return await this.downloadButtons.elementHandles();
     }
 
     async extractFileName(downloadButton)
