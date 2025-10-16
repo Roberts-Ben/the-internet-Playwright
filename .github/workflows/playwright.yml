@@ -55,11 +55,10 @@ jobs:
             node_modules
             ~/.cache/ms-playwright
           key: setup-${{ hashFiles('**/package-lock.json') }}
-          
+
       # Run Playwright tests
       - name: Run Playwright tests
         run: |
-          set -o pipefail
           npx playwright test --workers=4 --reporter=list,html --project=${{ matrix.browser }}
           
       # Upload HTML report
