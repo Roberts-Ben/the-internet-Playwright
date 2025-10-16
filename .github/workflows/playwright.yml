@@ -20,10 +20,8 @@ jobs:
         id: cache
         uses: actions/cache@v4
         with:
-          path: |
-            node_modules
-            ~/.cache/ms-playwright
-          key: setup-${{ hashFiles('**/package-lock.json') }}
+          path: node_modules
+          key: node-modules-${{ hashFiles('**/package-lock.json') }}
 
       # Install Node dependencies
       - name: Install Node dependencies
@@ -37,13 +35,15 @@ jobs:
     needs: setup
     runs-on: ubuntu-latest
     container:
-      image: mcr.microsoft.com/playwright:v1.48.2-focal
+      image: mcr.microsoft.com/playwright:v1.56.0-noble
     strategy:
       fail-fast: false
       matrix:
         browser: [chromium, firefox, webkit]
+
     steps:
       - uses: actions/checkout@v4
+
       - uses: actions/setup-node@v4
         with:
           node-version: lts/*
@@ -51,16 +51,19 @@ jobs:
       - name: Restore cache
         uses: actions/cache@v4
         with:
-          path: |
-            node_modules
-            ~/.cache/ms-playwright
-          key: setup-${{ hashFiles('**/package-lock.json') }}
+          path: node_modules
+          key: node-modules-${{ hashFiles('**/package-lock.json') }}
+
+      # Install Node dependencies inside container
+      - name: Install Node dependencies
+        run: npm ci
 
       # Run Playwright tests
       - name: Run Playwright tests
+        shell: bash
         run: |
           npx playwright test --workers=4 --reporter=list,html --project=${{ matrix.browser }}
-          
+
       # Upload HTML report
       - name: Upload Playwright Report
         if: always()
