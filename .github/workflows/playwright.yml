@@ -7,17 +7,21 @@ on:
     branches: [ main ]
 
 jobs:
-  setup:
+  test:
     runs-on: ubuntu-latest
+    container:
+      image: mcr.microsoft.com/playwright:v1.56.0-noble
+      env:
+        HOME: /root
+    strategy:
+      fail-fast: false
+      matrix:
+        browser: [chromium, firefox, webkit]
+
     steps:
       - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
-        with:
-          node-version: lts/*
 
-      # Cache Node modules and Playwright browsers
-      - name: Cache Node modules and Playwright
-        id: cache
+      - name: Cache Node modules
         uses: actions/cache@v4
         with:
           path: node_modules
@@ -27,44 +31,11 @@ jobs:
       - name: Install Node dependencies
         run: npm ci
 
-      # Install Playwright browsers with system dependencies
-      - name: Install Playwright Browsers
-        run: npx playwright install --with-deps
-
-  test:
-    needs: setup
-    runs-on: ubuntu-latest
-    container:
-      image: mcr.microsoft.com/playwright:v1.56.0-noble
-    strategy:
-      fail-fast: false
-      matrix:
-        browser: [chromium, firefox, webkit]
-
-    steps:
-      - uses: actions/checkout@v4
-
-      - uses: actions/setup-node@v4
-        with:
-          node-version: lts/*
-
-      - name: Restore cache
-        uses: actions/cache@v4
-        with:
-          path: node_modules
-          key: node-modules-${{ hashFiles('**/package-lock.json') }}
-
-      # Install Node dependencies inside container
-      - name: Install Node dependencies
-        run: npm ci
-
       # Run Playwright tests
       - name: Run Playwright tests
-        shell: bash
-        run: |
-          npx playwright test --workers=4 --reporter=list,html --project=${{ matrix.browser }}
+        run: npx playwright test --workers=4 --reporter=list,html --project=${{ matrix.browser }}
 
-      # Upload HTML report
+       # Upload HTML report
       - name: Upload Playwright Report
         if: always()
         uses: actions/upload-artifact@v4
