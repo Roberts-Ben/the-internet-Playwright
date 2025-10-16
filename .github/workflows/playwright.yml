@@ -9,22 +9,11 @@ on:
 jobs:
   setup:
     runs-on: ubuntu-latest
-    outputs:
-      cache-key: ${{ steps.cache.outputs.cache-hit }}
     steps:
       - uses: actions/checkout@v4
-
       - uses: actions/setup-node@v4
         with:
           node-version: lts/*
-
-      - name: Debug available WOFF packages
-        run: apt-cache search libwoff
-
-      - name: Install system dependencies (for WebKit)
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y libwoff1 libwoff2dec0_1 libwoff2enc0_1 libwoff2common1_1
 
       # Cache Node modules and Playwright browsers
       - name: Cache Node modules and Playwright
@@ -47,26 +36,26 @@ jobs:
   test:
     needs: setup
     runs-on: ubuntu-latest
+    container:
+      image: mcr.microsoft.com/playwright:v1.48.2-focal
     strategy:
       fail-fast: false
       matrix:
         browser: [chromium, firefox, webkit]
     steps:
       - uses: actions/checkout@v4
-
       - uses: actions/setup-node@v4
         with:
           node-version: lts/*
 
-      # Restore cache
-      - name: Restore Node modules and Playwright cache
+      - name: Restore cache
         uses: actions/cache@v4
         with:
           path: |
             node_modules
             ~/.cache/ms-playwright
           key: setup-${{ hashFiles('**/package-lock.json') }}
-
+          
       # Run Playwright tests
       - name: Run Playwright tests
         run: |
