@@ -11,8 +11,10 @@ jobs:
     runs-on: ubuntu-latest
     container:
       image: mcr.microsoft.com/playwright:v1.56.0-noble
+      options: --user 1001
       env:
         HOME: /root
+
     strategy:
       fail-fast: false
       matrix:
@@ -27,15 +29,12 @@ jobs:
           path: node_modules
           key: node-modules-${{ hashFiles('**/package-lock.json') }}
 
-      # Install Node dependencies
       - name: Install Node dependencies
         run: npm ci
 
-      # Run Playwright tests
       - name: Run Playwright tests
         run: npx playwright test --workers=4 --reporter=list,html --project=${{ matrix.browser }}
 
-       # Upload HTML report
       - name: Upload Playwright Report
         if: always()
         uses: actions/upload-artifact@v4
