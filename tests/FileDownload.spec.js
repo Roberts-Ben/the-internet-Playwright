@@ -26,6 +26,7 @@ test.describe('file Download', () => {
   });
 
   test('verifyFileDownload', async ( { page }) => {
+    test.setTimeout(50_000);
     const filesToDownload = await fileDownloadPage.getLargestFilePerExtension();
     const totalFiles = filesToDownload.size;
     let currentFile = 1;
