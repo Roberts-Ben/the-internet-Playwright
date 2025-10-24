@@ -54,7 +54,7 @@ test.describe('Entry Ad', () => {
   });
 
   test('verifyAdAppearsAfterRefresh', async ( { browserName }) => {
-    test.skip(browserName === 'firefox' || browserName === 'webkit', 'Skipping: Firefox does not refresh the Ad correctly');
+    test.skip(browserName === 'firefox' || browserName === 'webkit', `Skipping: ${browserName} does not refresh the Ad correctly`);
     
     await entryAdPage.waitForModalHidden();
     await expect(entryAdPage.modal).not.toBeVisible();

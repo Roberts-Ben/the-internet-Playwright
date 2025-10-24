@@ -21,6 +21,7 @@ test.describe('Javascript On Load Event Error', () => {
   });
 
   test('verifyError', async () => {
+    test.skip(browserName === 'firefox', `Skipping: ${browserName} does not support browser logs);
     const jsErrors = await javascriptOnLoadEventErrorPage.hasJsErrors();
 
     if (jsErrors.length > 0) 
