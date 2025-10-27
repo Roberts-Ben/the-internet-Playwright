@@ -6,7 +6,7 @@ export class FileDownloadPage
     {
         this.page = page;
         this.url = 'https://the-internet.herokuapp.com/download';
-        this.downloadButtons = this.page.locator('a[href]');
+        this.downloadButtons = this.page.getByRole('link');
     }
 
     async goto() 

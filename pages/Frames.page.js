@@ -8,8 +8,9 @@ export class FramesPage
         this.url = 'https://the-internet.herokuapp.com/frames';
         this.iFrameUrl = 'https://the-internet.herokuapp.com/iframe';
         this.nestedFrameUrl = 'https://the-internet.herokuapp.com/nested_frames';
-        this.nestedFramesLink = this.page.locator("//a[@href='/nested_frames']");
-        this.closeButton = this.page.locator("button >> div[aria-label='Close']");
+
+        this.nestedFramesLink = this.page.getByRole('link', { name: 'Nested Frames' });
+        this.closeButton = this.page.getByRole('button', { name: 'Close' });
         this.frameID = this.page.frameLocator('#mce_0_ifr');
         this.editor = this.frameID.locator('body');
     }

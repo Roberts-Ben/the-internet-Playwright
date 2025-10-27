@@ -7,7 +7,7 @@ export class EntryAdPage
         this.page = page;
         this.url = 'https://the-internet.herokuapp.com/entry_ad';
         this.modal = this.page.locator('.modal-footer');
-        this.resetButton = this.page.locator('#restart-ad');
+        this.resetButton = this.page.getByRole('link', { name: 'click here' });
     }
 
     async goto() 

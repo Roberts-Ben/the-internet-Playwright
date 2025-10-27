@@ -6,7 +6,7 @@ export class NotificationMessagesPage
     {
         this.page = page;
         this.url = 'https://the-internet.herokuapp.com/notification_message_rendered';
-        this.notificationTrigger = this.page.locator("//a[@href='/notification_message']");
+        this.notificationTrigger = this.page.getByRole('link', { name: 'Click here' });
         this.notification = this.page.locator('#flash');
     }
 

@@ -7,7 +7,7 @@ export class RedirectLinkPage
         this.page = page;
         this.url = 'https://the-internet.herokuapp.com/redirector';
         this.redirectUrl = 'https://the-internet.herokuapp.com/status_codes';
-        this.redirectLink = this.page.locator('#redirect');
+        this.redirectLink = this.page.getByRole('link', { name: 'here' });
     }
 
     async goto() 

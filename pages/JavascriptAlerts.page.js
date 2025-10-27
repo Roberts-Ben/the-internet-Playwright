@@ -6,9 +6,9 @@ export class JavascriptAlertsPage
     {
         this.page = page;
         this.url = 'https://the-internet.herokuapp.com/javascript_alerts';
-        this.jsAlertButton = this.page.locator("//button[@onclick='jsAlert()']");
-        this.jsConfirmButton = this.page.locator("//button[@onclick='jsConfirm()']");
-        this.jsPromptButton = this.page.locator("//button[@onclick='jsPrompt()']");
+        this.jsAlertButton = this.page.getByRole('button', { name: 'Click for JS Alert' });
+        this.jsConfirmButton = this.page.getByRole('button', { name: 'Click for JS Confirm' });
+        this.jsPromptButton = this.page.getByRole('button', { name: 'Click for JS Prompt' });
         this.resultLabel = this.page.locator('#result');
     }
 

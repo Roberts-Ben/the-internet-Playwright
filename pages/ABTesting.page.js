@@ -6,7 +6,7 @@ export class ABTestingPage
     {
         this.page = page;
         this.url = 'https://the-internet.herokuapp.com/abtest';
-        this.header = this.page.locator('h3');
+        this.header = this.page.getByRole('heading', { level: 3 });
     }
 
     async goto() 

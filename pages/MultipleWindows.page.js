@@ -6,7 +6,7 @@ export class MultipleWindowsPage
     {
         this.page = page;
         this.url = 'https://the-internet.herokuapp.com/windows';
-        this.newTabButton = this.page.locator("//a[@href='/windows/new']");
+        this.newTabButton = this.page.getByRole('link', { name: 'Click Here' });
         this.headerLocator = 'h3';
     }
 

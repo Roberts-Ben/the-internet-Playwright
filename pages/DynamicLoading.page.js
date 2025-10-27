@@ -6,8 +6,8 @@ export class DynamicLoadingPage
     {
         this.page = page;
         this.url = 'https://the-internet.herokuapp.com/dynamic_loading';
-        this.startButton = this.page.locator('//button');
-        this.hiddenElement = this.page.locator('#finish');
+        this.startButton = this.page.getByRole('button', { name: 'Start' });
+        this.hiddenElement = this.page.getByRole('heading', { name: 'Hello World!' });
     }
 
     async goto() 

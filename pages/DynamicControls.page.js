@@ -6,10 +6,10 @@ export class DynamicControlsPage
     {
         this.page = page;
         this.url = 'https://the-internet.herokuapp.com/dynamic_controls';
-        this.checkbox = this.page.locator('#checkbox');
+        this.checkbox = this.page.getByRole('checkbox');
         this.swapCheckboxButton = this.page.locator('button[onclick="swapCheckbox()"]');
         this.successMessage = this.page.locator('#message');
-        this.inputField = this.page.locator('input[type="text"]');
+        this.inputField = this.page.getByRole('textbox');
         this.swapInputButton = this.page.locator('button[onclick="swapInput()"]');
     }
 

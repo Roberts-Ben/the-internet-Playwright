@@ -6,7 +6,7 @@ export class DropdownPage
     {
         this.page = page;
         this.url = 'https://the-internet.herokuapp.com/dropdown';
-        this.dropdown = this.page.locator('#dropdown');
+        this.dropdown = this.page.getByRole('combobox');
     }
 
     async goto() 

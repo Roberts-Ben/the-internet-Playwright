@@ -15,9 +15,9 @@ export class FileUploadPage
     this.fileName = 'testFile.txt';
 
     this.chooseFileButton = this.page.locator('#file-upload');
-    this.uploadButton = this.page.locator('#file-submit');
+    this.uploadButton = this.page.getByRole('button', { name: 'Upload' });
     this.uploadedFile = this.page.locator('#uploaded-files');
-    this.header = this.page.locator('h1');
+    this.header = this.page.getByRole('heading', { level: 1 });
   }
 
   async goto() 

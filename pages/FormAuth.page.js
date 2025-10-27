@@ -8,10 +8,10 @@ export class FormAuthPage
         this.url = 'https://the-internet.herokuapp.com/login';
         this.bypassUrl = 'https://the-internet.herokuapp.com/secure';
 
-        this.loginButton = this.page.locator('button[type="submit"]');
-        this.logoutButton = this.page.locator("a[href*='/logout']");
-        this.usernameField = this.page.locator('#username');
-        this.passwordField = this.page.locator('#password');
+        this.loginButton = this.page.getByRole('button', { name: 'Login' });
+        this.logoutButton = this.page.getByRole('link', { name: 'Logout' });
+        this.usernameField = this.page.getByLabel('Username');
+        this.passwordField = this.page.getByLabel('Password');
         this.alert = this.page.locator('#flash');
 
         this.username = 'tomsmith';

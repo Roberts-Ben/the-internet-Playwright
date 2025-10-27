@@ -6,7 +6,7 @@ export class TyposPage
     {
         this.page = page;
         this.url = 'https://the-internet.herokuapp.com/typos';
-        this.content = this.page.locator("//*[@id=\"content\"]/div/p[2]");
+        this.content = this.page.locator('#content p').nth(1);
     }
 
     async goto() 

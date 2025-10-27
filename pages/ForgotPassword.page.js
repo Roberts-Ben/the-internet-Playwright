@@ -6,9 +6,9 @@ export class ForgotPasswordPage
     {
         this.page = page;
         this.url = 'https://the-internet.herokuapp.com/forgot_password';
-        this.inputField = this.page.locator('#email');
-        this.retrieveButton = this.page.locator('#form_submit');
-        this.header = this.page.locator('h1');
+        this.inputField = this.page.getByRole('textbox', { name: 'E-mail' });
+        this.retrieveButton = this.page.getByRole('button', { name: 'Retrieve password' });
+        this.header = this.page.getByRole('heading', { level: 1 });
         this.email = 'TestUser@TestEmail.com';
     }
 

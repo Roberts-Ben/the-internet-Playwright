@@ -6,7 +6,7 @@ export class InputsPage
     {
         this.page = page;
         this.url = 'https://the-internet.herokuapp.com/inputs';
-        this.inputField = this.page.locator("//input[@type='number']");
+        this.inputField = this.page.getByRole('spinbutton');
     }
 
     async goto() 

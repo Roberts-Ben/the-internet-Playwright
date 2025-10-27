@@ -7,10 +7,10 @@ export class GeolocationPage
         this.page = page;
         this.url = 'https://the-internet.herokuapp.com/geolocation';
         this.mapsBaseUrl = 'http://maps.google.com/';
-        this.locationButton = this.page.locator("//button[@onclick='getLocation()']");
+        this.locationButton = this.page.getByRole('button', { name: 'Where am I?' });
         this.latValue = this.page.locator('#lat-value');
         this.longValue = this.page.locator('#long-value');
-        this.mapsLink = this.page.locator("//a[contains(text(), 'See it on Google')]");
+        this.mapsLink = this.page.getByRole('link', { name: /See it on Google/ });
     }
 
     async goto() 

@@ -6,11 +6,11 @@ export class DynamicContentPage
     {
         this.page = page;
         this.url = 'https://the-internet.herokuapp.com/dynamic_content';
-        this.avatars = this.page.locator('img[src*="avatar"]');
+        this.avatars = this.page.getByRole('img');
         this.paragraphHolder = this.page.locator('.large-10');
         this.paragraphs = this.paragraphHolder.locator('.large-10.columns');
 
-        this.staticDynamicLink = this.page.getByText('click here');
+        this.staticDynamicLink = this.page.getByRole('link', { name: 'click here' });
     }
 
     async goto() 

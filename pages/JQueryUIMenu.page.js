@@ -41,6 +41,7 @@ export class JQueryUIMenuPage
         for (const index of path) 
         {
             const item = this.menuItem(index);
+            await this.page.waitForTimeout(500);
             await item.hover();
         }
     }
